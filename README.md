@@ -1,3 +1,3 @@
 # link-me
 
-A small network for developers built on the MERN-STACK
+A small social network for developers built on the MERN-STACK
