@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const passport = require('passport');
+const cors = require('cors');
 
 const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
@@ -9,16 +11,19 @@ const posts = require('./routes/api/posts');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+app.use(cors());
+
 // db config
 const db = require('./config/keys').mongoURI;
-
 // connect to mongodb
 mongoose.connect(db)
     .then(() => console.log('Mongo connected'))
     .catch(err => console.log(err.stack))
 
-
-// app.use(bodyParser.json());
+app.use(passport.initialize());
+require('./config/passport')(passport);
 
 app.get('/', (req, res) => res.send('INDEX PAGE'));
 
